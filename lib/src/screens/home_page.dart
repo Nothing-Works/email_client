@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../mocks/email_mock.dart';
+import '../models/email.dart';
+
 class HomePage extends StatelessWidget {
   final String title;
+
+  final List<Email> emails = EmailMock.fetchAll();
+
   HomePage({this.title});
 
   @override
@@ -12,19 +18,18 @@ class HomePage extends StatelessWidget {
       ),
       body: Center(
         child: ListView.separated(
-          itemCount: 10,
+          itemCount: emails.length,
           separatorBuilder: (BuildContext context, int index) {
             return Divider();
           },
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
-              title: Text('Title $index'),
+              title: Text('${emails[index].title}'),
               leading: CircleAvatar(
                 child: Text('AS'),
               ),
               isThreeLine: true,
-              subtitle: Text(
-                  'sub title which is very very long and everyone can see it and read it'),
+              subtitle: Text('${emails[index].message}'),
             );
           },
         ),
