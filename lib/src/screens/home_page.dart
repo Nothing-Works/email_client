@@ -11,7 +11,23 @@ class HomePage extends StatelessWidget {
         title: Text(title),
       ),
       body: Center(
-        child: Text('Hello'),
+        child: ListView.separated(
+          itemCount: 10,
+          separatorBuilder: (BuildContext context, int index) {
+            return Divider();
+          },
+          itemBuilder: (BuildContext context, int index) {
+            return ListTile(
+              title: Text('Title $index'),
+              leading: CircleAvatar(
+                child: Text('AS'),
+              ),
+              isThreeLine: true,
+              subtitle: Text(
+                  'sub title which is very very long and everyone can see it and read it'),
+            );
+          },
+        ),
       ),
     );
   }
