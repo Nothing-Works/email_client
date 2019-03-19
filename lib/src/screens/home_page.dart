@@ -29,7 +29,11 @@ class HomePage extends StatelessWidget {
                 child: Text('AS'),
               ),
               isThreeLine: true,
-              subtitle: Text('${emails[index].message}'),
+              subtitle: Text(
+                '${emails[index].message}',
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
             );
           },
         ),

@@ -3,7 +3,11 @@ import '../models/email.dart';
 class EmailMock extends Email {
   static List<Email> fetchAll() {
     return [
-      Email(message: 'This is the first message', title: 'Title 1'),
+      Email(
+          message: 'This is the first message leron text'
+              'This is the first message leron text'
+              ' This is the first message leron text This is the first message leron text',
+          title: 'Title 1'),
       Email(message: 'This is the second message', title: 'Title 2'),
       Email(message: 'This is awesome', title: 'Title 3'),
       Email(message: 'Good news', title: 'Title 4'),
