@@ -1,14 +1,11 @@
 import 'dart:convert';
 
+import 'package:email_client/src/models/email.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../mocks/email_mock.dart';
-import '../models/email.dart';
-
 class HomePage extends StatefulWidget {
   final String title;
-
   HomePage({this.title});
 
   @override
@@ -16,24 +13,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Email> emails = EmailMock.fetchAll();
-
-  List<Email> messages = <Email>[];
+  List<Email> emails = <Email>[];
 
   Future<List<Email>> loadEmails() async {
-    String content = await rootBundle.loadString('data/message.json');
-    List list = json.decode(content);
+    List list = json.decode(await rootBundle.loadString('data/message.json'));
 
-    List<Email> emails = list.map((json) => Email.fromJson(json)).toList();
-
-    return emails;
+    return list.map((json) => Email.fromJson(json)).toList();
   }
 
   @override
   void initState() {
-    loadEmails().then((onValue) {
-      messages = onValue;
-    });
+    loadEmails().then((onValue) => emails = onValue);
     super.initState();
   }
 
@@ -45,19 +35,19 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Center(
         child: ListView.separated(
-          itemCount: messages.length,
+          itemCount: emails.length,
           separatorBuilder: (BuildContext context, int index) {
             return Divider();
           },
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
-              title: Text('${messages[index].title}'),
+              title: Text('${emails[index].title}'),
               leading: CircleAvatar(
                 child: Text('AS'),
               ),
               isThreeLine: true,
               subtitle: Text(
-                '${messages[index].message}',
+                '${emails[index].message}',
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
