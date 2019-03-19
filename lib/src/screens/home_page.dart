@@ -15,15 +15,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Email> emails = <Email>[];
 
-  Future<List<Email>> loadEmails() async {
+  Future loadEmails() async {
     List list = json.decode(await rootBundle.loadString('data/message.json'));
 
-    return list.map((json) => Email.fromJson(json)).toList();
+    setState(() {
+      emails = list.map((json) => Email.fromJson(json)).toList();
+    });
   }
 
   @override
   void initState() {
-    loadEmails().then((onValue) => emails = onValue);
+    loadEmails();
     super.initState();
   }
 
