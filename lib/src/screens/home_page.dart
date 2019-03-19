@@ -18,16 +18,22 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final List<Email> emails = EmailMock.fetchAll();
 
-  var messages = [];
+  List<Email> messages = <Email>[];
 
-  Future loadEmails() async {
-    var content = await rootBundle.loadString('data/message.json');
-    messages = json.decode(content);
+  Future<List<Email>> loadEmails() async {
+    String content = await rootBundle.loadString('data/message.json');
+    List list = json.decode(content);
+
+    List<Email> emails = list.map((json) => Email.fromJson(json)).toList();
+
+    return emails;
   }
 
   @override
   void initState() {
-    loadEmails();
+    loadEmails().then((onValue) {
+      messages = onValue;
+    });
     super.initState();
   }
 
@@ -45,13 +51,13 @@ class _HomePageState extends State<HomePage> {
           },
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
-              title: Text('${messages[index]['title']}'),
+              title: Text('${messages[index].title}'),
               leading: CircleAvatar(
                 child: Text('AS'),
               ),
               isThreeLine: true,
               subtitle: Text(
-                '${messages[index]['message']}',
+                '${messages[index].message}',
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
