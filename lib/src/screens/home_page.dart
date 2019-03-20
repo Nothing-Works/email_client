@@ -42,14 +42,15 @@ class _HomePageState extends State<HomePage> {
             return Divider();
           },
           itemBuilder: (BuildContext context, int index) {
+            var email = emails[index];
             return ListTile(
-              title: Text('${emails[index].title}'),
+              title: Text('${email.title}'),
               leading: CircleAvatar(
                 child: Text('AS'),
               ),
               isThreeLine: true,
               subtitle: Text(
-                '${emails[index].message}',
+                '${email.message}',
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
