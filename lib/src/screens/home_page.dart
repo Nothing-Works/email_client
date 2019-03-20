@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:email_client/src/models/email.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -16,7 +16,10 @@ class _HomePageState extends State<HomePage> {
   List<Email> emails = <Email>[];
 
   Future loadEmails() async {
-    List list = jsonDecode(await rootBundle.loadString('data/message.json'));
+    var response =
+        await http.get('http://www.mocky.io/v2/5c92093e32000074086bcc74');
+
+    List list = jsonDecode(response.body);
 
     setState(() {
       emails = list.map((json) => Email.fromJson(json)).toList();
