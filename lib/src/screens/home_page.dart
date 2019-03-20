@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   List<Email> emails = <Email>[];
 
   Future loadEmails() async {
-    List list = json.decode(await rootBundle.loadString('data/message.json'));
+    List list = jsonDecode(await rootBundle.loadString('data/message.json'));
 
     setState(() {
       emails = list.map((json) => Email.fromJson(json)).toList();
