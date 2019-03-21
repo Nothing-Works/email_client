@@ -1,7 +1,7 @@
 import 'package:email_client/src/models/email.dart';
 import 'package:email_client/src/repositories/email_repositories.dart';
 import 'package:email_client/src/screens/email_detail.dart';
-import 'package:email_client/src/screens/new_email.dart';
+import 'package:email_client/src/widgets/new_button.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -85,13 +85,7 @@ class _HomePageState extends State<HomePage> {
               }
             }),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (BuildContext context) => NewEmail()));
-        },
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: NewButton(),
     );
   }
 }
