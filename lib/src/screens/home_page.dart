@@ -1,6 +1,6 @@
 import 'package:email_client/src/models/email.dart';
 import 'package:email_client/src/repositories/email_repositories.dart';
-import 'package:email_client/src/screens/email_detail.dart';
+import 'package:email_client/src/widgets/email_list_item.dart';
 import 'package:email_client/src/widgets/new_button.dart';
 import 'package:flutter/material.dart';
 
@@ -25,31 +25,17 @@ class _HomePageState extends State<HomePage> {
     var list = snapshot.data;
     return ListView.separated(
       itemCount: list.length,
-      separatorBuilder: (BuildContext context, int index) {
-        return Divider();
-      },
-      itemBuilder: (BuildContext context, int index) {
-        var email = list[index];
-        return ListTile(
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        EmailDetail(email.title, email.message)));
-          },
-          title: Text('${email.title}'),
-          leading: CircleAvatar(
-            child: Text('AS'),
-          ),
-          isThreeLine: true,
-          subtitle: Text(
-            '${email.message}',
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-        );
-      },
+      separatorBuilder: (BuildContext context, int index) => Divider(),
+      itemBuilder: (BuildContext context, int index) => EmailItem(list[index]),
+    );
+  }
+
+  Widget _appBar() {
+    return AppBar(
+      title: Text(widget.title),
+      actions: <Widget>[
+        IconButton(icon: Icon(Icons.refresh), onPressed: _refresh)
+      ],
     );
   }
 
@@ -62,12 +48,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: <Widget>[
-          IconButton(icon: Icon(Icons.refresh), onPressed: _refresh)
-        ],
-      ),
+      appBar: _appBar(),
       body: Center(
         child: FutureBuilder<List<Email>>(
             future: emails,
