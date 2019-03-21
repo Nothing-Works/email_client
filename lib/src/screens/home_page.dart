@@ -1,5 +1,7 @@
 import 'package:email_client/src/models/email.dart';
 import 'package:email_client/src/repositories/email_repositories.dart';
+import 'package:email_client/src/screens/email_detail.dart';
+import 'package:email_client/src/screens/new_email.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,6 +31,13 @@ class _HomePageState extends State<HomePage> {
       itemBuilder: (BuildContext context, int index) {
         var email = list[index];
         return ListTile(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        EmailDetail(email.title, email.message)));
+          },
           title: Text('${email.title}'),
           leading: CircleAvatar(
             child: Text('AS'),
@@ -75,6 +84,13 @@ class _HomePageState extends State<HomePage> {
                       : _listView(snapshot);
               }
             }),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (BuildContext context) => NewEmail()));
+        },
+        child: Icon(Icons.add),
       ),
     );
   }
