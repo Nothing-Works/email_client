@@ -13,6 +13,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   Future<List<Email>> emails;
 
+  void _refresh() {
+    setState(() {
+      emails = EmailRepository.fetchAll();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -24,38 +30,48 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.refresh), onPressed: _refresh)
+        ],
       ),
       body: Center(
         child: FutureBuilder<List<Email>>(
             future: emails,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                var list = snapshot.data;
-                return ListView.separated(
-                  itemCount: list.length,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return Divider();
-                  },
-                  itemBuilder: (BuildContext context, int index) {
-                    var email = list[index];
-                    return ListTile(
-                      title: Text('${email.title}'),
-                      leading: CircleAvatar(
-                        child: Text('AS'),
-                      ),
-                      isThreeLine: true,
-                      subtitle: Text(
-                        '${email.message}',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Email>> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.active:
+                case ConnectionState.none:
+                case ConnectionState.waiting:
+                  return CircularProgressIndicator();
+                case ConnectionState.done:
+                  if (snapshot.hasData) {
+                    var list = snapshot.data;
+                    return ListView.separated(
+                      itemCount: list.length,
+                      separatorBuilder: (BuildContext context, int index) {
+                        return Divider();
+                      },
+                      itemBuilder: (BuildContext context, int index) {
+                        var email = list[index];
+                        return ListTile(
+                          title: Text('${email.title}'),
+                          leading: CircleAvatar(
+                            child: Text('AS'),
+                          ),
+                          isThreeLine: true,
+                          subtitle: Text(
+                            '${email.message}',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        );
+                      },
                     );
-                  },
-                );
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
+                  }
               }
-              return CircularProgressIndicator();
             }),
       ),
     );
