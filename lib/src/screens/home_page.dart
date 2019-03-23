@@ -15,30 +15,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   Future<List<Email>> emails;
 
-  void _refresh() {
-    setState(() {
-      emails = EmailRepository.fetchAll();
-    });
-  }
-
-  Widget _listView(AsyncSnapshot<List<Email>> snapshot) {
-    var list = snapshot.data;
-    return ListView.separated(
-      itemCount: list.length,
-      separatorBuilder: (BuildContext context, int index) => Divider(),
-      itemBuilder: (BuildContext context, int index) => EmailItem(list[index]),
-    );
-  }
-
-  Widget _appBar() {
-    return AppBar(
-      title: Text(widget.title),
-      actions: <Widget>[
-        IconButton(icon: Icon(Icons.refresh), onPressed: _refresh)
-      ],
-    );
-  }
-
   @override
   void initState() {
     super.initState();
@@ -67,6 +43,30 @@ class _HomePageState extends State<HomePage> {
             }),
       ),
       floatingActionButton: NewButton(),
+    );
+  }
+
+  void _refresh() {
+    setState(() {
+      emails = EmailRepository.fetchAll();
+    });
+  }
+
+  Widget _listView(AsyncSnapshot<List<Email>> snapshot) {
+    var list = snapshot.data;
+    return ListView.separated(
+      itemCount: list.length,
+      separatorBuilder: (BuildContext context, int index) => Divider(),
+      itemBuilder: (BuildContext context, int index) => EmailItem(list[index]),
+    );
+  }
+
+  Widget _appBar() {
+    return AppBar(
+      title: Text(widget.title),
+      actions: <Widget>[
+        IconButton(icon: Icon(Icons.refresh), onPressed: _refresh)
+      ],
     );
   }
 }
