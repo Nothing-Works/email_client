@@ -1,6 +1,6 @@
 import 'package:email_client/src/models/email.dart';
 import 'package:email_client/src/repositories/email_repositories.dart';
-import 'package:email_client/src/widgets/email_drawer.dart';
+import 'package:email_client/src/widgets/drawer/email_drawer.dart';
 import 'package:email_client/src/widgets/email_list_item.dart';
 import 'package:email_client/src/widgets/new_button.dart';
 import 'package:flutter/material.dart';

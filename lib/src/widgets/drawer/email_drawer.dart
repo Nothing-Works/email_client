@@ -1,3 +1,4 @@
+import 'package:email_client/src/widgets/drawer/email_drawer_header.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -7,29 +8,7 @@ class EmailDrawer extends StatelessWidget {
     return Drawer(
       child: Column(
         children: <Widget>[
-          UserAccountsDrawerHeader(
-            accountEmail: Text('andy@gmail.com'),
-            accountName: Text('Andy Song'),
-            currentAccountPicture: CircleAvatar(
-              backgroundImage: NetworkImage(
-                  'https://avatars1.githubusercontent.com/u/18606648?s=460&v=4'),
-            ),
-            otherAccountsPictures: <Widget>[
-              GestureDetector(
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                            title: Text('Adding new account...'));
-                      });
-                },
-                child: CircleAvatar(
-                  child: Icon(Icons.add),
-                ),
-              )
-            ],
-          ),
+          EmailDrawerHeader(),
           ListTile(
             title: Text('Inbox'),
             leading: Icon(FontAwesomeIcons.inbox),
