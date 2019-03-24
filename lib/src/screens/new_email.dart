@@ -26,6 +26,11 @@ class _NewEmailState extends State<NewEmail> {
             children: <Widget>[
               ListTile(
                 title: TextFormField(
+                  validator: (value) {
+                    return value.contains('@')
+                        ? null
+                        : 'you need a valid email address';
+                  },
                   onSaved: (value) {
                     to = value;
                   },
@@ -36,6 +41,11 @@ class _NewEmailState extends State<NewEmail> {
               ),
               ListTile(
                 title: TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'you need to provide something';
+                    }
+                  },
                   onSaved: (value) {
                     subject = value;
                   },
@@ -47,6 +57,11 @@ class _NewEmailState extends State<NewEmail> {
               Divider(),
               ListTile(
                 title: TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'you need to provide something';
+                    }
+                  },
                   onSaved: (value) {
                     body = value;
                   },
@@ -59,9 +74,11 @@ class _NewEmailState extends State<NewEmail> {
               ListTile(
                 title: RaisedButton(
                   onPressed: () {
-                    key.currentState.save();
-                    Navigator.pop(
-                        context, Email(message: body, title: subject));
+                    if (key.currentState.validate()) {
+                      key.currentState.save();
+                      Navigator.pop(
+                          context, Email(message: body, title: subject));
+                    }
                   },
                   child: Text('Send'),
                 ),
