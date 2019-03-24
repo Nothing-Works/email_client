@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
               }
             }),
       ),
-      floatingActionButton: NewButton(),
+      floatingActionButton: NewButton(emails),
     );
   }
 
