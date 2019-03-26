@@ -64,7 +64,11 @@ class EmailItem extends StatelessWidget {
           caption: 'Delete',
           color: Colors.red,
           icon: Icons.delete,
-          onTap: () {},
+          onTap: () {
+            emails.then((value) {
+              value.removeAt(index);
+            });
+          },
         ),
       ],
     );
