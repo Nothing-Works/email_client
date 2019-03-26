@@ -1,7 +1,7 @@
 import 'package:email_client/src/models/email.dart';
 import 'package:email_client/src/screens/email_detail.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class EmailItem extends StatelessWidget {
   final Email email;
@@ -28,7 +28,7 @@ class EmailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
+    return Slidable(
       child: ListTile(
         onTap: () => _goToDetail(context),
         title: Text('${email.title}'),
@@ -37,27 +37,36 @@ class EmailItem extends StatelessWidget {
         subtitle: _text(email.message),
       ),
       key: ObjectKey(email.message),
-      onDismissed: (DismissDirection direction) {
-        emails.then((onValue) {
-          onValue.removeAt(index);
-        });
-      },
-      background: Container(
-        padding: EdgeInsets.all(16),
-        alignment: Alignment.centerRight,
-        color: Colors.red[300],
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(
-              FontAwesomeIcons.trash,
-              color: Colors.white,
-            ),
-            SizedBox(height: 4),
-            Text('Delete', style: TextStyle(color: Colors.white))
-          ],
+      delegate: SlidableDrawerDelegate(),
+      actionExtentRatio: 0.25,
+      actions: <Widget>[
+        IconSlideAction(
+          caption: 'Archive',
+          color: Colors.blue,
+          icon: Icons.archive,
+          onTap: () {},
         ),
-      ),
+        IconSlideAction(
+          caption: 'Share',
+          color: Colors.indigo,
+          icon: Icons.share,
+          onTap: () {},
+        ),
+      ],
+      secondaryActions: <Widget>[
+        IconSlideAction(
+          caption: 'More',
+          color: Colors.black45,
+          icon: Icons.more_horiz,
+          onTap: () {},
+        ),
+        IconSlideAction(
+          caption: 'Delete',
+          color: Colors.red,
+          icon: Icons.delete,
+          onTap: () {},
+        ),
+      ],
     );
   }
 }
