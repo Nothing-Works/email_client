@@ -54,13 +54,21 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _deleteAt(Email email) {
+    setState(() {
+      emails.then((value) {
+        value.remove(email);
+      });
+    });
+  }
+
   Widget _listView(AsyncSnapshot<List<Email>> snapshot) {
     var list = snapshot.data;
     return ListView.separated(
       itemCount: list.length,
       separatorBuilder: (BuildContext context, int index) => Divider(),
       itemBuilder: (BuildContext context, int index) =>
-          EmailItem(list[index], emails, index),
+          EmailItem(list[index], _deleteAt),
     );
   }
 

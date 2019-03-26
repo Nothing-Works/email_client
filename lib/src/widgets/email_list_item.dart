@@ -5,10 +5,9 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 class EmailItem extends StatelessWidget {
   final Email email;
-  final Future<List<Email>> emails;
-  final int index;
+  final deleteAt;
 
-  EmailItem(this.email, this.emails, this.index);
+  EmailItem(this.email, this.deleteAt);
 
   void _goToDetail(BuildContext context) {
     Navigator.push(
@@ -65,9 +64,7 @@ class EmailItem extends StatelessWidget {
           color: Colors.red,
           icon: Icons.delete,
           onTap: () {
-            emails.then((value) {
-              value.removeAt(index);
-            });
+            deleteAt(email);
           },
         ),
       ],

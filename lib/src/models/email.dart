@@ -12,4 +12,9 @@ class Email {
   factory Email.fromJson(Map<String, dynamic> json) => _$EmailFromJson(json);
 
   Map<String, dynamic> toJson() => _$EmailToJson(this);
+
+  @override
+  String toString() {
+    return 'Email{message: $message, title: $title}';
+  }
 }
