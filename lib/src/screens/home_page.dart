@@ -59,7 +59,8 @@ class _HomePageState extends State<HomePage> {
     return ListView.separated(
       itemCount: list.length,
       separatorBuilder: (BuildContext context, int index) => Divider(),
-      itemBuilder: (BuildContext context, int index) => EmailItem(list[index]),
+      itemBuilder: (BuildContext context, int index) =>
+          EmailItem(list[index], emails, index),
     );
   }
 
