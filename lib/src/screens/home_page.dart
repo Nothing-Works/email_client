@@ -30,8 +30,8 @@ class _HomePageState extends State<HomePage> {
         drawer: EmailDrawer(),
         body: TabBarView(
           children: <Widget>[
-            Center(child: _futureBuilder()),
-            Center(child: _futureBuilder())
+            Center(child: _futureBuilder('important')),
+            Center(child: _futureBuilder('other'))
           ],
         ),
         floatingActionButton: NewButton(emails),
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Widget _futureBuilder() {
+  Widget _futureBuilder(String value) {
     return FutureBuilder<List<Email>>(
         future: emails,
         builder: (BuildContext context, AsyncSnapshot<List<Email>> snapshot) {
@@ -66,13 +66,17 @@ class _HomePageState extends State<HomePage> {
             case ConnectionState.done:
               return snapshot.hasError
                   ? Text("${snapshot.error}")
-                  : _listView(snapshot);
+                  : _listView(snapshot, value);
           }
         });
   }
 
-  Widget _listView(AsyncSnapshot<List<Email>> snapshot) {
-    var list = snapshot.data;
+  Widget _listView(AsyncSnapshot<List<Email>> snapshot, String value) {
+    var list = [];
+    value == 'important'
+        ? list = snapshot.data
+        : list = snapshot.data.reversed.toList();
+
     return ListView.separated(
       itemCount: list.length,
       separatorBuilder: (BuildContext context, int index) => Divider(),
