@@ -24,27 +24,19 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appBar(),
-      drawer: EmailDrawer(),
-      body: Center(
-        child: FutureBuilder<List<Email>>(
-            future: emails,
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Email>> snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.active:
-                case ConnectionState.none:
-                case ConnectionState.waiting:
-                  return CircularProgressIndicator();
-                case ConnectionState.done:
-                  return snapshot.hasError
-                      ? Text("${snapshot.error}")
-                      : _listView(snapshot);
-              }
-            }),
+    return DefaultTabController(
+      child: Scaffold(
+        appBar: _appBar(),
+        drawer: EmailDrawer(),
+        body: TabBarView(
+          children: <Widget>[
+            Center(child: _futureBuilder()),
+            Center(child: _futureBuilder())
+          ],
+        ),
+        floatingActionButton: NewButton(emails),
       ),
-      floatingActionButton: NewButton(emails),
+      length: 2,
     );
   }
 
@@ -60,6 +52,23 @@ class _HomePageState extends State<HomePage> {
         value.remove(email);
       });
     });
+  }
+
+  Widget _futureBuilder() {
+    return FutureBuilder<List<Email>>(
+        future: emails,
+        builder: (BuildContext context, AsyncSnapshot<List<Email>> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.active:
+            case ConnectionState.none:
+            case ConnectionState.waiting:
+              return CircularProgressIndicator();
+            case ConnectionState.done:
+              return snapshot.hasError
+                  ? Text("${snapshot.error}")
+                  : _listView(snapshot);
+          }
+        });
   }
 
   Widget _listView(AsyncSnapshot<List<Email>> snapshot) {
@@ -78,6 +87,9 @@ class _HomePageState extends State<HomePage> {
       actions: <Widget>[
         IconButton(icon: Icon(Icons.refresh), onPressed: _refresh)
       ],
+      bottom: TabBar(
+        tabs: <Widget>[Tab(text: 'Important'), Tab(text: 'Other')],
+      ),
     );
   }
 }
