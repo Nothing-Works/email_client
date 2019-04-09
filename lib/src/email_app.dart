@@ -10,6 +10,12 @@ class EmailApp extends StatefulWidget {
 }
 
 class _EmailAppState extends State<EmailApp> {
+  void _setIndex(int i) {
+    setState(() {
+      _selectedIndex = i;
+    });
+  }
+
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -22,15 +28,17 @@ class _EmailAppState extends State<EmailApp> {
             ContactPage(),
             CalendarPage()
           ].elementAt(_selectedIndex),
-          bottomNavigationBar:
-              BottomNavigationBar(items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.mail), title: Text('Inbox')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.people), title: Text('Contact')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_today), title: Text('Calendar'))
-          ])),
+          bottomNavigationBar: BottomNavigationBar(
+              onTap: _setIndex,
+              currentIndex: _selectedIndex,
+              items: <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.mail), title: Text('Inbox')),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.people), title: Text('Contact')),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.calendar_today), title: Text('Calendar'))
+              ])),
     );
   }
 }
