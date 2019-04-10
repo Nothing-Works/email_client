@@ -13,11 +13,10 @@ class ContactPage extends StatelessWidget {
           actions: <Widget>[
             Chip(
                 label: StreamBuilder(
-                    stream: manager.contactListNow,
-                    builder: (BuildContext context,
-                        AsyncSnapshot<List<String>> snapshot) {
-                      var count = snapshot.data?.length ?? 0;
-                      return Text(count.toString(),
+                    stream: manager.contactCounter,
+                    builder:
+                        (BuildContext context, AsyncSnapshot<int> snapshot) {
+                      return Text('${snapshot.data ?? 0}',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold));
