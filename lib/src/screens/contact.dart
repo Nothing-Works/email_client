@@ -8,7 +8,24 @@ class ContactPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Contacts')),
+        appBar: AppBar(
+          title: Text('Contacts'),
+          actions: <Widget>[
+            Chip(
+                label: StreamBuilder(
+                    stream: manager.contactListNow,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<String>> snapshot) {
+                      var count = snapshot.data?.length ?? 0;
+                      return Text(count.toString(),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold));
+                    }),
+                backgroundColor: Colors.red),
+            Padding(padding: EdgeInsets.only(right: 16))
+          ],
+        ),
         drawer: EmailDrawer(),
         body: StreamBuilder<List<String>>(
             stream: manager.contactListNow,
