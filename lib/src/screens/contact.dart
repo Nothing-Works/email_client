@@ -13,7 +13,7 @@ class ContactPage extends StatelessWidget {
           title: Text('Contacts'),
           actions: <Widget>[
             Chip(
-                label: StreamBuilder(
+                label: StreamBuilder<int>(
                     stream: manager.contactCounter,
                     builder:
                         (BuildContext context, AsyncSnapshot<int> snapshot) {
@@ -31,18 +31,24 @@ class ContactPage extends StatelessWidget {
             stream: manager.contactListNow,
             builder:
                 (BuildContext context, AsyncSnapshot<List<Contact>> snapshot) {
-              var contacts = snapshot.data;
-              return ListView.separated(
-                  itemCount: contacts?.length ?? 0,
-                  itemBuilder: (BuildContext context, int index) {
-                    var contact = contacts[index];
-                    return ListTile(
-                        leading: CircleAvatar(),
-                        title: Text(contact.name),
-                        subtitle: Text(contact.email));
-                  },
-                  separatorBuilder: (BuildContext context, int index) =>
-                      Divider());
+              switch (snapshot.connectionState) {
+                case ConnectionState.active:
+                case ConnectionState.none:
+                case ConnectionState.waiting:
+                  return Center(child: CircularProgressIndicator());
+                case ConnectionState.done:
+                  var contacts = snapshot.data;
+                  return ListView.separated(
+                      itemCount: contacts?.length ?? 0,
+                      itemBuilder: (BuildContext context, int index) {
+                        var contact = contacts[index];
+                        return ListTile(
+                            leading: CircleAvatar(),
+                            title: Text(contact.name),
+                            subtitle: Text(contact.email));
+                      },
+                      separatorBuilder: (context, index) => Divider());
+              }
             }));
   }
 }
