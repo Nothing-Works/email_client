@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../blocs/contacts_bloc/contact_bloc.dart';
+import '../models/contact.dart';
 import '../widgets/drawer/email_drawer.dart';
 
 class ContactPage extends StatelessWidget {
@@ -26,15 +27,17 @@ class ContactPage extends StatelessWidget {
           ],
         ),
         drawer: EmailDrawer(),
-        body: StreamBuilder<List<String>>(
+        body: StreamBuilder<List<Contact>>(
             stream: manager.contactListNow,
             builder:
-                (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
-              var users = snapshot.data;
+                (BuildContext context, AsyncSnapshot<List<Contact>> snapshot) {
+              var contacts = snapshot.data;
               return ListView.separated(
-                  itemCount: users?.length ?? 0,
-                  itemBuilder: (BuildContext context, int index) =>
-                      ListTile(title: Text(users[index])),
+                  itemCount: contacts?.length ?? 0,
+                  itemBuilder: (BuildContext context, int index) {
+                    var contact = contacts[index];
+                    return ListTile(title: Text(contact.name));
+                  },
                   separatorBuilder: (BuildContext context, int index) =>
                       Divider());
             }));
