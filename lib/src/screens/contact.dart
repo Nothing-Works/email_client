@@ -12,17 +12,16 @@ class ContactPage extends StatelessWidget {
         appBar: AppBar(
           title: Text('Contacts'),
           actions: <Widget>[
-            Chip(
-                label: StreamBuilder<int>(
-                    stream: manager.contactCounter,
-                    builder:
-                        (BuildContext context, AsyncSnapshot<int> snapshot) {
-                      return Text('${snapshot.data ?? 0}',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold));
-                    }),
-                backgroundColor: Colors.red),
+            StreamBuilder<int>(
+              builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                return Chip(
+                    backgroundColor: Colors.red,
+                    label: Text('${snapshot.data ?? 0}',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold)));
+              },
+              stream: manager.contactCounter,
+            ),
             Padding(padding: EdgeInsets.only(right: 16))
           ],
         ),
