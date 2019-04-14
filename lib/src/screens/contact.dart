@@ -36,7 +36,10 @@ class ContactPage extends StatelessWidget {
                   itemCount: contacts?.length ?? 0,
                   itemBuilder: (BuildContext context, int index) {
                     var contact = contacts[index];
-                    return ListTile(title: Text(contact.name));
+                    return ListTile(
+                        leading: CircleAvatar(),
+                        title: Text(contact.name),
+                        subtitle: Text(contact.email));
                   },
                   separatorBuilder: (BuildContext context, int index) =>
                       Divider());
