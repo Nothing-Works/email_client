@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import './contact_search.dart';
 import '../blocs/contacts_bloc/contact_bloc.dart';
 import '../models/contact.dart';
 import '../widgets/drawer/email_drawer.dart';
@@ -22,6 +23,12 @@ class ContactPage extends StatelessWidget {
               },
               stream: manager.contactCounter,
             ),
+            IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  showSearch(
+                      context: context, delegate: ContactSearch(manager));
+                }),
             Padding(padding: EdgeInsets.only(right: 16))
           ],
         ),

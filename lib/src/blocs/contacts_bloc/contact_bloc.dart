@@ -4,8 +4,11 @@ import '../../models/contact.dart';
 import '../../service/contact_service.dart';
 
 class ContactManager {
-  Stream<List<Contact>> get contactListNow async* {
-    yield await ContactService.fetchAll();
+  Stream<List<Contact>> get contactListNow =>
+      Stream.fromFuture(ContactService.fetchAll());
+
+  Stream<List<Contact>> filteredContactList({String query}) {
+    return Stream.fromFuture(ContactService.fetchAll(query: query));
   }
 
   ContactManager() {
