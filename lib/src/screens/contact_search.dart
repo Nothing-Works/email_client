@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../blocs/contacts_bloc/contact_bloc.dart';
-import '../models/contact.dart';
+import '../widgets/contact_list.dart';
 
 class ContactSearch extends SearchDelegate {
   final ContactManager manager;
@@ -10,7 +10,7 @@ class ContactSearch extends SearchDelegate {
 
   @override
   List<Widget> buildActions(BuildContext context) {
-    return [IconButton(onPressed: () {}, icon: Icon(Icons.clear))];
+    return [IconButton(onPressed: () => query = '', icon: Icon(Icons.clear))];
   }
 
   @override
@@ -27,27 +27,19 @@ class ContactSearch extends SearchDelegate {
     if (query.length < 3) {
       return Center(child: Text('Type at least 3 letters to search'));
     }
-    return StreamBuilder<List<Contact>>(
+    return ContactList(
         stream: manager.filteredContactList(query: query),
-        builder: (BuildContext context, AsyncSnapshot<List<Contact>> snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.active:
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-              return Center(child: CircularProgressIndicator());
-            case ConnectionState.done:
-              var contacts = snapshot.data;
-              return ListView.separated(
-                  itemCount: contacts?.length ?? 0,
-                  itemBuilder: (BuildContext context, int index) {
-                    var contact = contacts[index];
-                    return ListTile(
-                        leading: CircleAvatar(),
-                        title: Text(contact.name),
-                        subtitle: Text(contact.email));
-                  },
-                  separatorBuilder: (context, index) => Divider());
-          }
+        builder: (context, contacts) {
+          return ListView.separated(
+              itemCount: contacts?.length ?? 0,
+              itemBuilder: (BuildContext context, int index) {
+                var contact = contacts[index];
+                return ListTile(
+                    leading: CircleAvatar(),
+                    title: Text(contact.name),
+                    subtitle: Text(contact.email));
+              },
+              separatorBuilder: (context, index) => Divider());
         });
   }
 
