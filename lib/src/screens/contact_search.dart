@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../blocs/contacts_bloc/contact_bloc.dart';
+import '../models/contact.dart';
 import '../widgets/contact_list.dart';
 
 class ContactSearch extends SearchDelegate {
@@ -29,7 +30,7 @@ class ContactSearch extends SearchDelegate {
     }
     return ContactList(
         stream: manager.filteredContactList(query: query),
-        builder: (context, contacts) {
+        builder: (BuildContext context, List<Contact> contacts) {
           return ListView.separated(
               itemCount: contacts?.length ?? 0,
               itemBuilder: (BuildContext context, int index) {

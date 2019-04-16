@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import './contact_search.dart';
 import '../blocs/contacts_bloc/contact_bloc.dart';
+import '../models/contact.dart';
 import '../widgets/contact_list.dart';
 import '../widgets/drawer/email_drawer.dart';
 
@@ -35,7 +36,7 @@ class ContactPage extends StatelessWidget {
         drawer: EmailDrawer(),
         body: ContactList(
             stream: manager.contactListNow,
-            builder: (context, contacts) {
+            builder: (BuildContext context, List<Contact> contacts) {
               return ListView.separated(
                   itemCount: contacts?.length ?? 0,
                   itemBuilder: (BuildContext context, int index) {

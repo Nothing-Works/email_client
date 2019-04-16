@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../models/contact.dart';
 
+typedef Widget ContactBuilder(BuildContext context, List<Contact> contacts);
+
 class ContactList extends StatelessWidget {
   final Stream<List<Contact>> stream;
-  final Function builder;
+  final ContactBuilder builder;
   const ContactList({this.stream, this.builder});
 
   @override
@@ -18,8 +20,7 @@ class ContactList extends StatelessWidget {
             case ConnectionState.waiting:
               return Center(child: CircularProgressIndicator());
             case ConnectionState.done:
-              var contacts = snapshot.data;
-              return builder(context, contacts);
+              return builder(context, snapshot.data);
           }
         });
   }
