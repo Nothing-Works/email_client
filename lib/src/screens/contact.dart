@@ -1,52 +1,40 @@
+import 'package:email_client/src/widgets/contact_counter.dart';
 import 'package:flutter/material.dart';
 
 import './contact_search.dart';
-import '../blocs/contacts_bloc/contact_bloc.dart';
 import '../models/contact.dart';
 import '../widgets/contact_list.dart';
 import '../widgets/drawer/email_drawer.dart';
 
 class ContactPage extends StatelessWidget {
-  final manager = ContactManager();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text('Contacts'),
           actions: <Widget>[
-            StreamBuilder<int>(
-              builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-                return Chip(
-                    backgroundColor: Colors.red,
-                    label: Text('${snapshot.data ?? 0}',
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold)));
-              },
-              stream: manager.contactCounter,
-            ),
+            ContactCounter(),
             IconButton(
                 icon: Icon(Icons.search),
                 onPressed: () {
-                  showSearch(
-                      context: context, delegate: ContactSearch(manager));
+                  showSearch(context: context, delegate: ContactSearch());
                 }),
             Padding(padding: EdgeInsets.only(right: 16))
           ],
         ),
         drawer: EmailDrawer(),
         body: ContactList(
-            stream: manager.contactListNow,
             builder: (BuildContext context, List<Contact> contacts) {
-              return ListView.separated(
-                  itemCount: contacts?.length ?? 0,
-                  itemBuilder: (BuildContext context, int index) {
-                    var contact = contacts[index];
-                    return ListTile(
-                        leading: CircleAvatar(),
-                        title: Text(contact.name),
-                        subtitle: Text(contact.email));
-                  },
-                  separatorBuilder: (context, index) => Divider());
-            }));
+          return ListView.separated(
+              itemCount: contacts?.length ?? 0,
+              itemBuilder: (BuildContext context, int index) {
+                var contact = contacts[index];
+                return ListTile(
+                    leading: CircleAvatar(),
+                    title: Text(contact.name),
+                    subtitle: Text(contact.email));
+              },
+              separatorBuilder: (context, index) => Divider());
+        }));
   }
 }

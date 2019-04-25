@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:rxdart/rxdart.dart';
+
 import '../../models/contact.dart';
 import '../../service/contact_service.dart';
 
@@ -15,6 +17,8 @@ class ContactManager {
     contactListNow.listen((list) => _counterController.add(list.length));
   }
 
-  final StreamController<int> _counterController = StreamController<int>();
+  final BehaviorSubject<int> _counterController = BehaviorSubject<int>();
   Stream<int> get contactCounter => _counterController.stream;
+
+  void dispose() => _counterController.close();
 }
