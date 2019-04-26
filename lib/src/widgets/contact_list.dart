@@ -7,15 +7,13 @@ import '../models/contact.dart';
 typedef Widget ContactBuilder(BuildContext context, List<Contact> contacts);
 
 class ContactList extends StatelessWidget {
+  final String query;
   final ContactBuilder builder;
-  const ContactList({this.builder});
-
+  const ContactList({this.builder, this.query});
   @override
   Widget build(BuildContext context) {
-    ContactManager manager = Provider.of(context);
-
     return StreamBuilder<List<Contact>>(
-        stream: manager.contactListNow,
+        stream: _stream(Provider.of(context)),
         builder: (BuildContext context, AsyncSnapshot<List<Contact>> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.active:
@@ -27,4 +25,8 @@ class ContactList extends StatelessWidget {
           }
         });
   }
+
+  Stream<List<Contact>> _stream(ContactManager manager) => query == null
+      ? manager.contactListNow
+      : manager.filteredContactList(query: query);
 }

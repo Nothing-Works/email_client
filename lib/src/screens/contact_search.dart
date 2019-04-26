@@ -23,18 +23,20 @@ class ContactSearch extends SearchDelegate {
     if (query.length < 3) {
       return Center(child: Text('Type at least 3 letters to search'));
     }
-    return ContactList(builder: (BuildContext context, List<Contact> contacts) {
-      return ListView.separated(
-          itemCount: contacts?.length ?? 0,
-          itemBuilder: (BuildContext context, int index) {
-            var contact = contacts[index];
-            return ListTile(
-                leading: CircleAvatar(),
-                title: Text(contact.name),
-                subtitle: Text(contact.email));
-          },
-          separatorBuilder: (context, index) => Divider());
-    });
+    return ContactList(
+        query: query,
+        builder: (BuildContext context, List<Contact> contacts) {
+          return ListView.separated(
+              itemCount: contacts?.length ?? 0,
+              itemBuilder: (BuildContext context, int index) {
+                var contact = contacts[index];
+                return ListTile(
+                    leading: CircleAvatar(),
+                    title: Text(contact.name),
+                    subtitle: Text(contact.email));
+              },
+              separatorBuilder: (context, index) => Divider());
+        });
   }
 
   @override
