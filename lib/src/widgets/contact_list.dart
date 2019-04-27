@@ -13,7 +13,7 @@ class ContactList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Contact>>(
-        stream: _stream(Provider.of(context)),
+        stream: _stream(Provider.of<ContactManager>(context)),
         builder: (BuildContext context, AsyncSnapshot<List<Contact>> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.active:

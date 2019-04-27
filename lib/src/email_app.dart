@@ -21,7 +21,7 @@ class _EmailAppState extends State<EmailApp> {
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Provider(
+    return Provider<ContactManager>(
       data: ContactManager(),
       child: MaterialApp(
         title: 'Flutter Demo',
