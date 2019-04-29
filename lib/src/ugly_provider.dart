@@ -8,15 +8,31 @@ class UglyProvider extends StatefulWidget {
   @override
   _UglyProviderState createState() => _UglyProviderState();
 
-  static _UglyProviderState of(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(_UglyProvider)
-            as _UglyProvider)
-        .data;
+  static _UglyProviderState of(BuildContext context, {bool subscribe = true}) {
+    return subscribe
+        ? (context.inheritFromWidgetOfExactType(_UglyProvider) as _UglyProvider)
+            .data
+        : (context
+                .ancestorInheritedElementForWidgetOfExactType(_UglyProvider)
+                .widget as _UglyProvider)
+            .data;
   }
 }
 
 class _UglyProviderState extends State<UglyProvider> {
   int counter;
+
+  void increment() {
+    setState(() {
+      counter++;
+    });
+  }
+
+  void decrement() {
+    setState(() {
+      counter--;
+    });
+  }
 
   @override
   void initState() {

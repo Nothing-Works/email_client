@@ -1,10 +1,11 @@
+import 'package:email_client/src/screens/calendar.dart';
 import 'package:flutter/material.dart';
 
 import './blocs/contacts_bloc/contact_bloc.dart';
 import './provider.dart';
-import './screens/calendar.dart';
 import './screens/contact.dart';
 import './screens/home_page.dart';
+import './ugly_provider.dart';
 
 class EmailApp extends StatefulWidget {
   @override
@@ -22,28 +23,29 @@ class _EmailAppState extends State<EmailApp> {
   @override
   Widget build(BuildContext context) {
     return Provider<ContactManager>(
-      data: ContactManager(),
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(primarySwatch: Colors.indigo, accentColor: Colors.red),
-        home: Scaffold(
-            body: <Widget>[
-              HomePage(title: 'Email App'),
-              ContactPage(),
-              CalendarPage()
-            ].elementAt(_selectedIndex),
-            bottomNavigationBar: BottomNavigationBar(
-                onTap: _setIndex,
-                currentIndex: _selectedIndex,
-                items: <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.mail), title: Text('Inbox')),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.people), title: Text('Contact')),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.calendar_today), title: Text('Calendar'))
-                ])),
-      ),
-    );
+        data: ContactManager(),
+        child: UglyProvider(
+            child: MaterialApp(
+                title: 'Flutter Demo',
+                theme: ThemeData(
+                    primarySwatch: Colors.indigo, accentColor: Colors.red),
+                home: Scaffold(
+                    body: <Widget>[
+                      HomePage(title: 'Email App'),
+                      ContactPage(),
+                      CalendarPage()
+                    ].elementAt(_selectedIndex),
+                    bottomNavigationBar: BottomNavigationBar(
+                        onTap: _setIndex,
+                        currentIndex: _selectedIndex,
+                        items: <BottomNavigationBarItem>[
+                          BottomNavigationBarItem(
+                              icon: Icon(Icons.mail), title: Text('Inbox')),
+                          BottomNavigationBarItem(
+                              icon: Icon(Icons.people), title: Text('Contact')),
+                          BottomNavigationBarItem(
+                              icon: Icon(Icons.calendar_today),
+                              title: Text('Calendar'))
+                        ])))));
   }
 }
