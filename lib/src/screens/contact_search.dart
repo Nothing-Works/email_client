@@ -26,7 +26,8 @@ class ContactSearch extends SearchDelegate {
       return Center(child: Text('Type at least 3 letters to search'));
     }
     return ContactList(
-        stream: Provider.of<ContactManager>(context)
+        stream: Provider.of(context)
+            .fetch(ContactManager)
             .filteredContactList(query: query),
         builder: (BuildContext context, List<Contact> contacts) {
           return ListView.separated(

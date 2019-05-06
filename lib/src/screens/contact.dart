@@ -26,7 +26,7 @@ class ContactPage extends StatelessWidget {
         ),
         drawer: EmailDrawer(),
         body: ContactList(
-            stream: Provider.of<ContactManager>(context).contactListNow,
+            stream: Provider.of(context).fetch(ContactManager).contactListNow,
             builder: (BuildContext context, List<Contact> contacts) {
               return ListView.separated(
                   itemCount: contacts?.length ?? 0,

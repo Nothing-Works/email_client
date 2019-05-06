@@ -1,7 +1,7 @@
+import 'package:email_client/src/overseer.dart';
 import 'package:email_client/src/screens/calendar.dart';
 import 'package:flutter/material.dart';
 
-import './blocs/contacts_bloc/contact_bloc.dart';
 import './provider.dart';
 import './screens/contact.dart';
 import './screens/home_page.dart';
@@ -22,8 +22,8 @@ class _EmailAppState extends State<EmailApp> {
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Provider<ContactManager>(
-        data: ContactManager(),
+    return Provider(
+        data: Overseer(),
         child: UglyProvider(
             child: MaterialApp(
                 title: 'Flutter Demo',

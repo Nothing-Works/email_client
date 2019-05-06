@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 class ContactCounter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ContactManager manager = Provider.of<ContactManager>(context);
-
     return StreamBuilder<int>(
         builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
           return Chip(
@@ -15,6 +13,6 @@ class ContactCounter extends StatelessWidget {
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold)));
         },
-        stream: manager.contactCounter);
+        stream: Provider.of(context).fetch(ContactManager).contactCounter);
   }
 }
