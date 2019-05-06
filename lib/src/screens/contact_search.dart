@@ -1,3 +1,5 @@
+import 'package:email_client/src/blocs/contacts_bloc/contact_bloc.dart';
+import 'package:email_client/src/provider.dart';
 import 'package:flutter/material.dart';
 
 import '../models/contact.dart';
@@ -24,7 +26,8 @@ class ContactSearch extends SearchDelegate {
       return Center(child: Text('Type at least 3 letters to search'));
     }
     return ContactList(
-        query: query,
+        stream: Provider.of<ContactManager>(context)
+            .filteredContactList(query: query),
         builder: (BuildContext context, List<Contact> contacts) {
           return ListView.separated(
               itemCount: contacts?.length ?? 0,

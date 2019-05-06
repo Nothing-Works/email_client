@@ -1,3 +1,5 @@
+import 'package:email_client/src/blocs/contacts_bloc/contact_bloc.dart';
+import 'package:email_client/src/provider.dart';
 import 'package:email_client/src/widgets/contact_counter.dart';
 import 'package:flutter/material.dart';
 
@@ -24,17 +26,18 @@ class ContactPage extends StatelessWidget {
         ),
         drawer: EmailDrawer(),
         body: ContactList(
+            stream: Provider.of<ContactManager>(context).contactListNow,
             builder: (BuildContext context, List<Contact> contacts) {
-          return ListView.separated(
-              itemCount: contacts?.length ?? 0,
-              itemBuilder: (BuildContext context, int index) {
-                var contact = contacts[index];
-                return ListTile(
-                    leading: CircleAvatar(),
-                    title: Text(contact.name),
-                    subtitle: Text(contact.email));
-              },
-              separatorBuilder: (context, index) => Divider());
-        }));
+              return ListView.separated(
+                  itemCount: contacts?.length ?? 0,
+                  itemBuilder: (BuildContext context, int index) {
+                    var contact = contacts[index];
+                    return ListTile(
+                        leading: CircleAvatar(),
+                        title: Text(contact.name),
+                        subtitle: Text(contact.email));
+                  },
+                  separatorBuilder: (context, index) => Divider());
+            }));
   }
 }
