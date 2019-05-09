@@ -6,15 +6,11 @@ import '../../models/contact.dart';
 import '../../service/contact_service.dart';
 
 class ContactManager {
-  Stream<List<Contact>> get contactListNow =>
-      Stream.fromFuture(ContactService.fetchAll());
-
-  Stream<List<Contact>> filteredContactList({String query}) {
-    return Stream.fromFuture(ContactService.fetchAll(query: query));
-  }
+  Stream<List<Contact>> fetchContactList({String query}) =>
+      Stream.fromFuture(ContactService.fetchAll(query: query));
 
   ContactManager() {
-    contactListNow.listen((list) => _counterController.add(list.length));
+    fetchContactList().listen((list) => _counterController.add(list.length));
   }
 
   final BehaviorSubject<int> _counterController = BehaviorSubject<int>();

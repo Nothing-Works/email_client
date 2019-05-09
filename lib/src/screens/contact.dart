@@ -11,6 +11,8 @@ import '../widgets/drawer/email_drawer.dart';
 class ContactPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final ContactManager manager = Provider.of(context).fetch(ContactManager);
+
     return Scaffold(
         appBar: AppBar(
           title: Text('Contacts'),
@@ -26,7 +28,7 @@ class ContactPage extends StatelessWidget {
         ),
         drawer: EmailDrawer(),
         body: ContactList(
-            stream: Provider.of(context).fetch(ContactManager).contactListNow,
+            stream: manager.fetchContactList(),
             builder: (BuildContext context, List<Contact> contacts) {
               return ListView.separated(
                   itemCount: contacts?.length ?? 0,
