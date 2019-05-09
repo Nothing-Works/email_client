@@ -1,6 +1,5 @@
-import 'package:email_client/src/blocs/contacts_bloc/contact_bloc.dart';
-
-import 'blocs/contacts_bloc/calendar_counter_manager.dart';
+import 'blocs/calendar_bloc/calendar_counter_manager.dart';
+import 'blocs/contact_bloc/contact_bloc.dart';
 
 class Overseer {
   Map<dynamic, dynamic> repository = {};

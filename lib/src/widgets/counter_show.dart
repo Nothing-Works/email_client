@@ -1,4 +1,4 @@
-import 'package:email_client/src/blocs/contacts_bloc/calendar_counter_manager.dart';
+import 'package:email_client/src/blocs/calendar_bloc/calendar_counter_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../provider.dart';

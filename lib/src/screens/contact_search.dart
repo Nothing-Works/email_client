@@ -1,4 +1,4 @@
-import 'package:email_client/src/blocs/contacts_bloc/contact_bloc.dart';
+import 'package:email_client/src/blocs/contact_bloc/contact_bloc.dart';
 import 'package:email_client/src/provider.dart';
 import 'package:flutter/material.dart';
 
