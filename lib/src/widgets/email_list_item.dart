@@ -28,46 +28,45 @@ class EmailItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Slidable(
-      child: ListTile(
-        onTap: () => _goToDetail(context),
-        title: Text('${email.title}'),
-        leading: CircleAvatar(child: Text('AS')),
-        isThreeLine: true,
-        subtitle: _text(email.message),
-      ),
-      key: ObjectKey(email.message),
-      delegate: SlidableDrawerDelegate(),
-      actionExtentRatio: 0.25,
-      actions: <Widget>[
-        IconSlideAction(
-          caption: 'Archive',
-          color: Colors.blue,
-          icon: Icons.archive,
-          onTap: () {},
+        actionPane: SlidableDrawerActionPane(),
+        child: ListTile(
+          onTap: () => _goToDetail(context),
+          title: Text('${email.title}'),
+          leading: CircleAvatar(child: Text('AS')),
+          isThreeLine: true,
+          subtitle: _text(email.message),
         ),
-        IconSlideAction(
-          caption: 'Share',
-          color: Colors.indigo,
-          icon: Icons.share,
-          onTap: () {},
-        ),
-      ],
-      secondaryActions: <Widget>[
-        IconSlideAction(
-          caption: 'More',
-          color: Colors.black45,
-          icon: Icons.more_horiz,
-          onTap: () {},
-        ),
-        IconSlideAction(
-          caption: 'Delete',
-          color: Colors.red,
-          icon: Icons.delete,
-          onTap: () {
-            deleteAt(email);
-          },
-        ),
-      ],
-    );
+        key: ObjectKey(email.message),
+        actionExtentRatio: 0.25,
+        actions: <Widget>[
+          IconSlideAction(
+            caption: 'Archive',
+            color: Colors.blue,
+            icon: Icons.archive,
+            onTap: () {},
+          ),
+          IconSlideAction(
+            caption: 'Share',
+            color: Colors.indigo,
+            icon: Icons.share,
+            onTap: () {},
+          ),
+        ],
+        secondaryActions: <Widget>[
+          IconSlideAction(
+            caption: 'More',
+            color: Colors.black45,
+            icon: Icons.more_horiz,
+            onTap: () {},
+          ),
+          IconSlideAction(
+            caption: 'Delete',
+            color: Colors.red,
+            icon: Icons.delete,
+            onTap: () {
+              deleteAt(email);
+            },
+          )
+        ]);
   }
 }
