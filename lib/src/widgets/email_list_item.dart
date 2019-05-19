@@ -28,6 +28,13 @@ class EmailItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Slidable(
+        // temporary code flutter_slidable library problem.
+        dismissal: SlidableDismissal(
+          child: SlidableDrawerDismissal(),
+          onWillDismiss: (actionType) {
+            return false;
+          },
+        ),
         actionPane: SlidableDrawerActionPane(),
         child: ListTile(
           onTap: () => _goToDetail(context),
