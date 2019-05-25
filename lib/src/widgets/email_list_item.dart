@@ -18,23 +18,12 @@ class EmailItem extends StatelessWidget {
   }
 
   Widget _text(String value) {
-    return Text(
-      value,
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
-    );
+    return Text(value, maxLines: 2, overflow: TextOverflow.ellipsis);
   }
 
   @override
   Widget build(BuildContext context) {
     return Slidable(
-        // temporary code flutter_slidable library problem.
-        dismissal: SlidableDismissal(
-          child: SlidableDrawerDismissal(),
-          onWillDismiss: (actionType) {
-            return false;
-          },
-        ),
         actionPane: SlidableDrawerActionPane(),
         child: ListTile(
           onTap: () => _goToDetail(context),
@@ -47,33 +36,29 @@ class EmailItem extends StatelessWidget {
         actionExtentRatio: 0.25,
         actions: <Widget>[
           IconSlideAction(
-            caption: 'Archive',
-            color: Colors.blue,
-            icon: Icons.archive,
-            onTap: () {},
-          ),
+              caption: 'Archive',
+              color: Colors.blue,
+              icon: Icons.archive,
+              onTap: () {}),
           IconSlideAction(
-            caption: 'Share',
-            color: Colors.indigo,
-            icon: Icons.share,
-            onTap: () {},
-          ),
+              caption: 'Share',
+              color: Colors.indigo,
+              icon: Icons.share,
+              onTap: () {}),
         ],
         secondaryActions: <Widget>[
           IconSlideAction(
-            caption: 'More',
-            color: Colors.black45,
-            icon: Icons.more_horiz,
-            onTap: () {},
-          ),
+              caption: 'More',
+              color: Colors.black45,
+              icon: Icons.more_horiz,
+              onTap: () {}),
           IconSlideAction(
-            caption: 'Delete',
-            color: Colors.red,
-            icon: Icons.delete,
-            onTap: () {
-              deleteAt(email);
-            },
-          )
+              caption: 'Delete',
+              color: Colors.red,
+              icon: Icons.delete,
+              onTap: () {
+                deleteAt(email);
+              })
         ]);
   }
 }

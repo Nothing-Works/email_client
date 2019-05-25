@@ -159,7 +159,7 @@ packages:
       name: flutter_slidable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.0"
+    version: "0.5.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -456,7 +456,7 @@ packages:
       name: web_socket_channel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.12"
+    version: "1.0.13"
   yaml:
     dependency: transitive
     description:
