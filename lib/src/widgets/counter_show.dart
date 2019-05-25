@@ -1,4 +1,5 @@
 import 'package:email_client/src/blocs/calendar_bloc/calendar_counter_manager.dart';
+import 'package:email_client/src/blocs/observer.dart';
 import 'package:flutter/material.dart';
 
 import '../provider.dart';
@@ -10,10 +11,8 @@ class CounterShow extends StatelessWidget {
         Provider.of(context).fetch(CalendarCounterManager);
 
     return Center(
-        child: StreamBuilder<int>(
-            initialData: 0,
+        child: Observer<int>(
             stream: manager.calendarCounter,
-            builder: (BuildContext context, AsyncSnapshot snapshot) =>
-                Text('Calendar: ${snapshot.data}')));
+            onSuccess: (context, data) => Text('Calendar Andy: $data')));
   }
 }
