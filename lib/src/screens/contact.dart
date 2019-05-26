@@ -12,7 +12,7 @@ class ContactPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ContactManager manager = Provider.of(context).fetch(ContactManager);
-
+    manager.inFilter.add('');
     return Scaffold(
         appBar: AppBar(
           title: Text('Contacts'),
@@ -28,7 +28,7 @@ class ContactPage extends StatelessWidget {
         ),
         drawer: EmailDrawer(),
         body: ContactList(
-            stream: manager.fetchContactList(),
+            stream: manager.fetchContactList,
             builder: (BuildContext context, List<Contact> contacts) {
               return ListView.separated(
                   itemCount: contacts?.length ?? 0,

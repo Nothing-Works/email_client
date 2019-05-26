@@ -6,15 +6,26 @@ import '../../models/contact.dart';
 import '../../service/contact_service.dart';
 
 class ContactManager {
-  Stream<List<Contact>> fetchContactList({String query}) =>
-      Stream.fromFuture(ContactService.fetchAll(query: query));
+  Stream<List<Contact>> get fetchContactList => _collectionSubject.stream;
+  Sink<String> get inFilter => _filterSubject.sink;
+  Stream<int> get contactCounter => _counterSubject.stream;
 
   ContactManager() {
-    fetchContactList().listen((list) => _counterController.add(list.length));
+    _filterSubject.stream.listen((filter) async {
+      var contacts = await ContactService.fetchAll(query: filter);
+      _collectionSubject.add(contacts);
+    });
+    _collectionSubject.listen((list) => _counterSubject.add(list.length));
   }
 
-  final BehaviorSubject<int> _counterController = BehaviorSubject<int>();
-  Stream<int> get contactCounter => _counterController.stream;
+  final PublishSubject<List<Contact>> _collectionSubject =
+      PublishSubject<List<Contact>>();
+  final PublishSubject<String> _filterSubject = PublishSubject<String>();
+  final BehaviorSubject<int> _counterSubject = BehaviorSubject<int>();
 
-  void dispose() => _counterController.close();
+  void dispose() {
+    _collectionSubject.close();
+    _counterSubject.close();
+    _filterSubject.close();
+  }
 }
