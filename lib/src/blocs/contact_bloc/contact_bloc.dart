@@ -9,7 +9,9 @@ class ContactManager {
   Observable<int> get contactCounter => _counterSubject.stream;
 
   ContactManager() {
-    _filterSubject.listen((filter) async {
+    _filterSubject
+        .debounceTime(Duration(milliseconds: 500))
+        .listen((filter) async {
       var contacts = await ContactService.fetchAll(query: filter);
       _collectionSubject.add(contacts);
     });
