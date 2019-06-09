@@ -21,12 +21,12 @@ class ContactSearch extends SearchDelegate {
   }
 
   @override
-  Widget buildResults(BuildContext context) {
+  Widget buildResults(BuildContext context) => Container();
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
     final ContactManager manager = Provider.of(context).fetch(ContactManager);
 
-    if (query.length < 3) {
-      return Center(child: Text('Type at least 3 letters to search'));
-    }
     manager.inFilter.add(query);
     return ContactList(
         stream: manager.fetchContactList,
@@ -42,10 +42,5 @@ class ContactSearch extends SearchDelegate {
               },
               separatorBuilder: (context, index) => Divider());
         });
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    return Container();
   }
 }
