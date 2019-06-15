@@ -11,10 +11,10 @@ class ContactManager {
   ContactManager() {
     _filterSubject
         .debounceTime(Duration(milliseconds: 500))
-        .listen((filter) async {
-      var contacts = await ContactService.fetchAll(query: filter);
-      _collectionSubject.add(contacts);
-    });
+        .switchMap((filter) async* {
+      yield await ContactService.fetchAll(query: filter);
+    }).listen((contacts) async => _collectionSubject.add(contacts));
+
     _collectionSubject.listen((list) => _counterSubject.add(list.length));
   }
 
